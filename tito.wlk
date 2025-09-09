@@ -28,3 +28,53 @@ object terere {
         //tambien (cantidad * 0.1).max(1)
     }
 }
+
+object licuadoDeFrutas {
+    const property listaNutrientes = []
+
+    method rendimiento(cantidad) {
+      return listaNutrientes.sum() * 1.max(cantidad.div(1000))
+      /*En caso de necesitar transformar los valores de la lista en numericos
+      (ej, si la lista fuese de frutas), le agrego dentro del sum una funcion
+      lambda para acceder a los nutrientes de cada elemento/fruta
+
+      return listaNutrientes.sum({unaFruta => unaFruta.nutrientes()})
+
+      Allí, accede al nutriente de la fruta y lo suma
+      */
+    }
+
+    method agregarNutriente(nutriente) {
+      listaNutrientes.add(nutriente)
+    }
+}
+
+object jugo {
+    var bebida = wisky
+
+    method mezclarCon(unaBebida) {
+      bebida = unaBebida
+    }
+    
+    method rendimiento(cantidad) {
+      return 1 + bebida.rendimiento(cantidad) / 4
+    }
+}
+
+object coctel {
+  const composicion = #{}
+  
+
+  method agregarBebida(unaBebida) {
+    composicion.add(unaBebida)
+  }
+
+  method rendimiento(cantidad) {
+    var total = 1
+    composicion.forEach({unaBebida => total = total * unaBebida.rendimiento(cantidad/composicion.size() )})
+    return total
+    /*Se puede hacer esto ya que la variable "total" es parte del metodo
+    y no estamos modificando nada del objeto coctel
+    */
+  }
+}
